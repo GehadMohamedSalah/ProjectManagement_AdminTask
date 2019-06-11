@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProjectsManagementSystem.Models.User_Projects>
+
+@{
+    ViewBag.Title = "ShowPosts";
+}
+
+<h2>Show Posts</h2>
+
+
+@foreach (var item in Model)
+{
+    <div style="background-color:ghostwhite;color:black;margin: auto;width: 60%;border: 3px solid #73AD21;padding: 10px;font-size:20px;text-align:center">
+        <img src="~/Uploads/@Html.DisplayFor(modelItem => item.Users.img)" style="width:100px;height:100px;border-radius:100%" />
+        @Html.DisplayFor(modelItem => item.Users.name , new { htmlAttributes = new { @style = "font-size:23px;font-weight:bold;" } }) 
+        <p style="font-size:23px;font-weight:bold;">Project Name</p>
+        @Html.DisplayFor(modelItem => item.Projects.name)
+        <p style="font-size:23px;font-weight:bold;">Project Description</p>
+        @Html.DisplayFor(modelItem => item.Projects.jobDescr)
+        <p  style="font-size:23px;font-weight:bold;">Project state</p>
+        @Html.DisplayFor(modelItem => item.Projects.state)
+        <br /> <br />
+        @if (item.Projects.state == "pending")
+        {
+            @Html.ActionLink("Add Post To Home Page", "AcceptOrRejectPost", new { id = item.id, value = "accepted" }) <text>||</text>
+            @Html.ActionLink("Remove Post", "AcceptOrRejectPost", new { id = item.id, value = "rejected" }
+       ,new { onclick = "return confirm('Are you sure you want to delete project " + item.Projects.name + "?');" }) <text>||</text>
+            @Html.ActionLink("Edit Post", "EditPost", new { id = item.id })
+        }
+        else
+        {
+            @Html.ActionLink("Remove Post", "AcceptOrRejectPost", new { id = item.id, value = "rejected" }
+        , new { onclick = "return confirm('Are you sure you want to delete project " + item.Projects.name + "?');" }) <text>||</text>
+            @Html.ActionLink("Edit Post", "EditPost", new { id = item.id })
+        }
+
+
+    </div>
+    <br /><br />
+}
